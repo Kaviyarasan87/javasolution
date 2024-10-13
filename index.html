@@ -195,7 +195,7 @@
                 <div class="text-card">
                     <p class="question">Problem Description:</p>
                     <pre>${question}</pre>
-                    <p class="answer">Program:</p>
+                    <p class="answer">Code:</p>
                     <pre>${answer}</pre>
                     <button onclick="editText('${id}')"></button>
                     <button class="delete-btn" onclick="deleteText('${id}')">Delete</button>
@@ -223,8 +223,8 @@
 
         // Edit a Q&A in Firebase
         window.editText = function (id) {
-            const newQuestion = prompt("Edit your question:");
-            const newAnswer = prompt("Edit your answer:");
+            const newQuestion = prompt("Edit your Problem Description:");
+            const newAnswer = prompt("Edit your Code:");
             if (newQuestion && newAnswer) {
                 const textRef = ref(database, `qa/${id}`);
                 update(textRef, { question: newQuestion.trim(), answer: newAnswer.trim() });
