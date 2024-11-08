@@ -102,7 +102,7 @@
 
         .text-card button {
             background-color: #f1eeee;
-            color: white;
+            color: black;
             border: none;
             padding: 5px 8px;
             cursor: pointer;
@@ -139,7 +139,7 @@
 <body>
 
     <div class="container">
-        <h1>Store Your java programs</h1>
+        <h1>Store Your Java Programs</h1>
         <textarea id="questionInput" placeholder="Enter your Problem Description here..."></textarea>
         <textarea id="answerInput" placeholder="Enter your Java Code here..."></textarea>
         <button id="saveButton">Save</button>
@@ -189,19 +189,30 @@
             });
         }
 
-        // Display Q&A with edit and delete options
+        // Display Q&A with edit, delete, and copy options
         function displayTexts(texts) {
             storedTexts.innerHTML = texts.map(({ id, question, answer }) => `
                 <div class="text-card">
                     <p class="question">Problem Description:</p>
                     <pre>${question}</pre>
                     <p class="answer">Code:</p>
-                    <pre>${answer}</pre>
-                    <button onclick="editText('${id}')"></button>
+                    <pre id="answer-${id}">${answer}</pre>
+                    <button onclick="copyText('answer-${id}')">Copy</button>
+                    <button onclick="editText('${id}')">Edit</button>
                     <button class="delete-btn" onclick="deleteText('${id}')">Delete</button>
                 </div>
             `).join('');
         }
+
+        // Copy function
+        window.copyText = function (id) {
+            const textToCopy = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Text copied to clipboard!");
+            }).catch((error) => {
+                console.error("Copy failed", error);
+            });
+        };
 
         // Save Q&A to Firebase
         saveButton.addEventListener('click', () => {
