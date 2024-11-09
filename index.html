@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             background-color: var(--bg-color, #f0f0f0);
-            color: var(--text-color, #333);
+            color: var(--text-color, #040404);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,14 +24,14 @@
             width: 60%;
             background-color: var(--container-bg, #fff);
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(4, 4, 4, 0.1);
             padding: 20px;
         }
 
         h1 {
             text-align: center;
             font-size: 2em;
-            color: var(--text-color, #333);
+            color: var(--text-color, #181717);
             margin-bottom: 20px;
         }
 
@@ -51,7 +51,7 @@
             width: 100%;
             padding: 8px;
             font-size: 14px;
-            background-color: #5cb85c;
+            background-color: #9dd69d;
             color: white;
             border: none;
             border-radius: 5px;
@@ -60,7 +60,7 @@
         }
 
         #saveButton:hover {
-            background-color: #4cae4c;
+            background-color: #a8cea8;
         }
 
         #searchInput {
@@ -88,11 +88,11 @@
 
         .text-card .question {
             font-weight: bold;
-            color: #1497e2;
+            color: #b3d1e2;
         }
 
         .text-card .answer {
-            color: #ff0606;
+            color: #e39797;
         }
 
         .text-card pre {
@@ -104,7 +104,7 @@
 
         .text-card button {
             background-color: #f1eeee;
-            color: black;
+            color: rgb(20, 18, 18);
             border: none;
             padding: 5px 8px;
             cursor: pointer;
@@ -162,8 +162,8 @@
 <body>
 
     <div class="container">
-        <h1>Store Your Java Programs</h1>
-        <button id="themeToggleButton">Toggle Dark Mode</button>
+        <h1>Store Your Programs</h1>
+        <button id="themeToggleButton">Dark Mode</button>
         <textarea id="questionInput" placeholder="Enter your Problem Description here..."></textarea>
         <textarea id="answerInput" placeholder="Enter your Java Code here..."></textarea>
         <button id="saveButton">Save</button>
