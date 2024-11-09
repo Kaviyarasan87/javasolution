@@ -11,16 +11,18 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-color: var(--bg-color, #f0f0f0);
+            color: var(--text-color, #333);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
             width: 60%;
-            background-color: #fff;
+            background-color: var(--container-bg, #fff);
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -29,7 +31,7 @@
         h1 {
             text-align: center;
             font-size: 2em;
-            color: #333;
+            color: var(--text-color, #333);
             margin-bottom: 20px;
         }
 
@@ -41,7 +43,7 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: var(--input-bg, #f9f9f9);
             margin-bottom: 10px;
         }
 
@@ -68,7 +70,7 @@
             margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: var(--input-bg, #f9f9f9);
         }
 
         .text-display {
@@ -76,7 +78,7 @@
         }
 
         .text-card {
-            background-color: #f7f7f7;
+            background-color: var(--card-bg, #f7f7f7);
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -134,12 +136,34 @@
                 height: 100px;
             }
         }
+
+        /* Dark mode variables */
+        .dark-mode {
+            --bg-color: #333;
+            --text-color: #f0f0f0;
+            --container-bg: #444;
+            --input-bg: #555;
+            --card-bg: #666;
+        }
+
+        #themeToggleButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 10px;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Store Your Java Programs</h1>
+        <button id="themeToggleButton">Toggle Dark Mode</button>
         <textarea id="questionInput" placeholder="Enter your Problem Description here..."></textarea>
         <textarea id="answerInput" placeholder="Enter your Java Code here..."></textarea>
         <button id="saveButton">Save</button>
@@ -178,6 +202,7 @@
         const answerInput = document.getElementById('answerInput');
         const storedTexts = document.getElementById('storedTexts');
         const searchInput = document.getElementById('searchInput');
+        const themeToggleButton = document.getElementById('themeToggleButton');
 
         // Load Q&A from Firebase
         function loadTexts() {
@@ -252,6 +277,11 @@
                 const filteredTexts = texts.filter(({ question, answer }) => question.toLowerCase().includes(searchText) || answer.toLowerCase().includes(searchText));
                 displayTexts(filteredTexts);
             });
+        });
+
+        // Theme toggle functionality
+        themeToggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
         });
 
         // Initial load
