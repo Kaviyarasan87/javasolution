@@ -137,13 +137,110 @@
                 max-width: none;
             }
         }
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Menu Button */
+        .menu-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Hover Effect */
+        .menu-btn:hover {
+            transform: scale(1.1);
+            background-color: #555;
+        }
+
+        /* Responsive Dynamic Sizing */
+        @media (max-width: 768px) {
+            .menu-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+        }
+
+        /* Menu Items */
+        .menu {
+            position: fixed;
+            top: 60px;
+            left: 10px;
+            background: white;
+            width: 150px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            transition: background 0.3s;
+        }
+
+        .menu a:hover {
+            background: #f1f1f1;
+        }
+        .menu.visible {
+            display: block;
+            opacity: 1;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            background: white;
+            width: 150px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .menu-btn:focus + .menu,
+        .menu:hover {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">Text&File Uploads</div>
         <nav>
-            <a href="home.html">Home</a>
+            <a href="index.html">Home</a>
             <a href="text.html">Text Upload</a>
             <a href="dot.html">File Upload</a>
             <a href="about.html">About</a>
@@ -152,6 +249,14 @@
     <!-- About Section -->
     <section class="page-section bg-primary" id="about">
         <div class="container px-4 px-lg-5">
+             <div class="menu-btn" tabindex="0">☰</div>
+    <div class="menu">
+        <a href="home.html">Home</a>
+        <a href="text.html">Text Upload</a>
+        <a href="dot.html">File Upload</a>
+        <a href="about.html">About</a>
+    </div>
+
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 text-center">
                     <h2 class="text-white mt-0">We've got what you need!</h2>
@@ -168,7 +273,7 @@
                         Whether for work, study, or personal use, our platform adapts to your needs.  
                         Join us today and experience hassle-free file and text storage like never before!  
                     </p>
-                    <a class="btn btn-light btn-xl" href="home.html">Get Started!</a>
+                    <a class="btn btn-light btn-xl" href="index.html">Get Started!</a>
                 </div>
             </div>
         </div>
@@ -257,6 +362,14 @@
                 return false;
             }
             return true;
+        }
+                function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
         }
     </script>
 </body>
