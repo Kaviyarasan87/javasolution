@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Save and manage your text and code snippets securely in the cloud">
+    <title>Text Storage - Text&File Uploads</title>
+    <style>
+        /* CSS Variables */
+        :root {
+            --ocean-blue: #001f3f;
+            --sky-blue: #00d9ff;
+            --primary-gradient: linear-gradient(135deg, #001f3f, #00d9ff);
+            --card-bg: #ffffff;
+            --text-primary: #040404;
+            --text-secondary: #666;
+            --border-color: #ddd;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.15);
+            --transition: 0.3s ease;
+            --header-height: 70px;
+        }
+
+        /* Dark Mode Variables */
+        [data-theme="dark"] {
+            --card-bg: #2c3e50;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --border-color: #34495e;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: calc(var(--header-height) + 1rem) 1rem 1rem;
+            transition: background var(--transition);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            height: var(--header-height);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition);
+        }
+
+        nav a:hover {
+            color: #ff4500;
+        }
+
+        /* Mobile Menu */
+        .menu-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            color: white;
+            font-size: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1001;
+            border: none;
+            transition: all var(--transition);
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.05);
+            background-color: #555;
+        }
+
+        .menu {
+            position: fixed;
+            top: 5rem;
+            left: 1rem;
+            background: white;
+            width: 200px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition);
+            z-index: 1000;
+        }
+
+        .menu.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu a {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--transition);
+        }
+
+        .menu a:last-child {
+            border-bottom: none;
+        }
+
+        .menu a:hover {
+            background: #f1f1f1;
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 700px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--ocean-blue);
+            margin-bottom: 2rem;
+        }
+
+        /* Form Elements */
+        textarea {
+            width: 100%;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            transition: border-color var(--transition);
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+        }
+
+        textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        #questionInput {
+            min-height: 60px;
+        }
+
+        #answerInput {
+            min-height: 150px;
+        }
+
+        /* Save Button with Animation */
+        .upload-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 3px solid var(--sky-blue);
+            font-size: 16px;
+            font-weight: 600;
+            background: transparent;
+            color: var(--ocean-blue);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            border-radius: 8px;
+            transition: all var(--transition);
+        }
+
+        .upload-btn::before {
+            content: "Save";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--ocean-blue);
+            color: var(--sky-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s;
+        }
+
+        .upload-btn:hover::before {
+            left: 100%;
+            opacity: 0;
+        }
+
+        .upload-btn::after {
+            content: "Click";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--ocean-blue);
+            color: var(--sky-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s;
+            opacity: 0;
+        }
+
+        .upload-btn:hover::after {
+            left: 0;
+            opacity: 1;
+        }
+
+        /* Search Input */
+        #searchInput {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            transition: border-color var(--transition);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+        }
+
+        /* Text Display Section */
+        .text-display {
+            margin-top: 2rem;
+        }
+
+        .text-display h2 {
+            color: var(--ocean-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        #storedTexts {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        /* Custom Scrollbar */
+        #storedTexts::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #storedTexts::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        #storedTexts::-webkit-scrollbar-thumb {
+            background: var(--sky-blue);
+            border-radius: 4px;
+        }
+
+        /* Text Card */
+        .text-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .text-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .text-card .question {
+            font-weight: 700;
+            color: var(--sky-blue);
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+        }
+
+        .text-card .answer {
+            font-weight: 700;
+            color: #e74c3c;
+            margin: 1rem 0 0.5rem;
+            font-size: 14px;
+        }
+
+        .text-card pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-primary);
+            background: rgba(0, 0, 0, 0.03);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Card Buttons */
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .card-actions button {
+            flex: 1;
+            min-width: 80px;
+            background: linear-gradient(135deg, var(--sky-blue), #0099cc);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .card-actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 153, 204, 0.3);
+        }
+
+        .card-actions button.delete-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .card-actions button.delete-btn:hover {
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        /* Theme Toggle */
+        #themeToggleButton {
+            position: fixed;
+            top: 5rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            z-index: 999;
+        }
+
+        #themeToggleButton:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            header nav {
+                display: none;
+            }
+
+            .menu-btn {
+                display: flex;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            #themeToggleButton {
+                padding: 0.5rem 1rem;
+                font-size: 12px;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .card-actions button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: calc(var(--header-height) + 0.5rem) 0.5rem 0.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .menu-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <div class="logo">Text&File Uploads</div>
+        <nav role="navigation">
+            <a href="index.html">Home</a>
+            <a href="text.html" aria-current="page">Text Upload</a>
+            <a href="dot.html">File Upload</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+    <div class="menu" id="menu" role="navigation">
+        <a href="index.html">Home</a>
+        <a href="text.html">Text Upload</a>
+        <a href="dot.html">File Upload</a>
+        <a href="about.html">About</a>
+    </div>
+
+    <div class="container">
+        <h1>Save Your Text Files</h1>
+        
+        <button id="themeToggleButton" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+        
+        <form id="textForm" aria-label="Text storage form">
+            <label for="questionInput" class="visually-hidden">Text Title</label>
+            <textarea id="questionInput" placeholder="Enter your Text Title here..." aria-required="true"></textarea>
+            
+            <label for="answerInput" class="visually-hidden">Text or Code Content</label>
+            <textarea id="answerInput" placeholder="Enter your Text or Code here..." aria-required="true"></textarea>
+            
+            <button type="submit" class="upload-btn">Save</button>
+        </form>
+
+        <label for="searchInput" class="visually-hidden">Search stored texts</label>
+        <input type="search" id="searchInput" placeholder="🔍 Search Text Title..." aria-label="Search text titles">
+
+        <div class="text-display" role="region" aria-label="Stored texts">
+            <h2>Stored Texts</h2>
+            <div id="storedTexts"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase imports - PRESERVED CONFIGURATION
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+        // Firebase configuration - UNCHANGED
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKqtXpAtVO3mDfq7QdRsZNhORmyivgl80",
+            authDomain: "copy-text-4436d.firebaseapp.com",
+            projectId: "copy-text-4436d",
+            storageBucket: "copy-text-4436d.appspot.com",
+            messagingSenderId: "659777122240",
+            appId: "1:659777122240:web:534c31ace947efe09fe225",
+            measurementId: "G-3L18QMEH0E",
+            databaseURL: "https://copy-text-4436d-default-rtdb.firebaseio.com/"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // DOM Elements
+        const elements = {
+            form: document.getElementById('textForm'),
+            questionInput: document.getElementById('questionInput'),
+            answerInput: document.getElementById('answerInput'),
+            storedTexts: document.getElementById('storedTexts'),
+            searchInput: document.getElementById('searchInput'),
+            themeToggle: document.getElementById('themeToggleButton'),
+            menuBtn: document.getElementById('menuBtn'),
+            menu: document.getElementById('menu')
+        };
+
+        let allTexts = [];
+
+        // Load texts from Firebase
+        function loadTexts() {
+            const textsRef = ref(database, 'qa/');
+            onValue(textsRef, (snapshot) => {
+                const data = snapshot.val();
+                allTexts = data ? Object.entries(data).map(([id, qa]) => ({ id, ...qa })) : [];
+                displayTexts(allTexts);
+            });
+        }
+
+        // Display texts with improved performance
+        function displayTexts(texts) {
+            if (texts.length === 0) {
+                elements.storedTexts.innerHTML = `
+                    <div class="empty-state">
+                        <p>No texts stored yet</p>
+                        <p style="font-size: 0.9rem;">Start by adding your first text above</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Use DocumentFragment for better performance
+            const fragment = document.createDocumentFragment();
+            
+            texts.forEach(({ id, question, answer }) => {
+                const card = document.createElement('div');
+                card.className = 'text-card';
+                card.innerHTML = `
+                    <p class="question">Text Title:</p>
+                    <pre>${escapeHtml(question)}</pre>
+                    <p class="answer">Text Or Code:</p>
+                    <pre id="answer-${id}">${escapeHtml(answer)}</pre>
+                    <div class="card-actions">
+                        <button data-action="copy" data-id="${id}">📋 Copy</button>
+                        <button data-action="edit" data-id="${id}">✏️ Edit</button>
+                        <button class="delete-btn" data-action="delete" data-id="${id}">🗑️ Delete</button>
+                    </div>
+                `;
+                fragment.appendChild(card);
+            });
+
+            elements.storedTexts.innerHTML = '';
+            elements.storedTexts.appendChild(fragment);
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Copy text to clipboard
+        async function copyText(id) {
+            const textElement = document.getElementById(`answer-${id}`);
+            const textToCopy = textElement.textContent;
+            
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                showNotification('✓ Text copied to clipboard!', 'success');
+            } catch (error) {
+                console.error("Copy failed", error);
+                showNotification('✗ Failed to copy text', 'error');
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 6rem;
+                right: 1rem;
+                background: ${type === 'success' ? '#2ecc71' : '#e74c3c'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // Save text to Firebase
+        elements.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const question = elements.questionInput.value.trim();
+            const answer = elements.answerInput.value.trim();
+            
+            if (!question || !answer) {
+                showNotification('Please fill in both fields', 'error');
+                return;
+            }
+
+            try {
+                elements.form.classList.add('loading');
+                const textsRef = ref(database, 'qa/');
+                await push(textsRef, { question, answer });
+                
+                elements.questionInput.value = '';
+                elements.answerInput.value = '';
+                showNotification('✓ Text saved successfully!', 'success');
+            } catch (error) {
+                console.error('Save failed:', error);
+                showNotification('✗ Failed to save text', 'error');
+            } finally {
+                elements.form.classList.remove('loading');
+            }
+        });
+
+        // Delete text from Firebase
+        async function deleteText(id) {
+            if (!confirm('Are you sure you want to delete this text?')) return;
+            
+            try {
+                const textRef = ref(database, `qa/${id}`);
+                await remove(textRef);
+                showNotification('✓ Text deleted successfully!', 'success');
+            } catch (error) {
+                console.error('Delete failed:', error);
+                showNotification('✗ Failed to delete text', 'error');
+            }
+        }
+
+        // Edit text in Firebase
+        async function editText(id) {
+            const textData = allTexts.find(t => t.id === id);
+            if (!textData) return;
+
+            const newQuestion = prompt("Edit your Text Title:", textData.question);
+            if (newQuestion === null) return;
+
+            const newAnswer = prompt("Edit your Text/Code:", textData.answer);
+            if (newAnswer === null) return;
+
+            if (!newQuestion.trim() || !newAnswer.trim()) {
+                showNotification('Both fields are required', 'error');
+                return;
+            }
+
+            try {
+                const textRef = ref(database, `qa/${id}`);
+                await update(textRef, { 
+                    question: newQuestion.trim(), 
+                    answer: newAnswer.trim() 
+                });
+                showNotification('✓ Text updated successfully!', 'success');
+            } catch (error) {
+                console.error('Update failed:', error);
+                showNotification('✗ Failed to update text', 'error');
+            }
+        }
+
+        // Event delegation for card buttons
+        elements.storedTexts.addEventListener('click', (e) => {
+            const button = e.target.closest('button[data-action]');
+            if (!button) return;
+
+            const action = button.dataset.action;
+            const id = button.dataset.id;
+
+            switch(action) {
+                case 'copy':
+                    copyText(id);
+                    break;
+                case 'edit':
+                    editText(id);
+                    break;
+                case 'delete':
+                    deleteText(id);
+                    break;
+            }
+        });
+
+        // Search functionality with debounce
+        let searchTimeout;
+        elements.searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                
+                if (!searchTerm) {
+                    displayTexts(allTexts);
+                    return;
+                }
+
+                const filtered = allTexts.filter(({ question, answer }) => 
+                    question.toLowerCase().includes(searchTerm) || 
+                    answer.toLowerCase().includes(searchTerm)
+                );
+                
+                displayTexts(filtered);
+            }, 300);
+        });
+
+        // Theme toggle functionality
+        elements.themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            elements.themeToggle.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+            
+            // Save preference
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            elements.themeToggle.textContent = '☀️ Light Mode';
+        }
+
+        // Mobile menu toggle
+        elements.menuBtn.addEventListener('click', () => {
+            elements.menu.classList.toggle('visible');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!elements.menuBtn.contains(e.target) && !elements.menu.contains(e.target)) {
+                elements.menu.classList.remove('visible');
+            }
+        });
+
+        // Initialize
+        loadTexts();
+
+        // Add visually-hidden class for accessibility
+        const style = document.createElement('style');
+        style.textContent = `
+            .visually-hidden {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                margin: -1px;
+                padding: 0;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
