@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Secure cloud file storage and management with 1KVR. Upload, store, download and share your files online. Free file hosting service with fast, reliable storage. Upload any file type securely.">
+    <meta name="keywords"
+        content="file upload, cloud storage, file hosting, online storage, file sharing, secure file storage, document storage, file management, cloud files, upload files online">
+    <meta name="author" content="Text&File Uploads">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="File Upload - Secure Cloud Storage">
+    <meta property="og:description"
+        content="Upload and manage your files securely in the cloud. Fast, reliable file storage service.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://1kvr.vercel.app/dot.html">
+    <meta property="og:image" content="https://1kvr.vercel.app/logo.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="File Upload - Secure Cloud Storage">
+    <meta name="twitter:description" content="Upload and manage your files securely in the cloud">
+    <meta name="twitter:image" content="https://1kvr.vercel.app/logo.png">
+
+    <title>File Upload - 1KVR Cloud Storage | Free Secure File Hosting</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://1kvr.vercel.app/dot.html">
+
+    <!-- Favicon - Browser Tab & Search Results Icon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png?v=2">
+    <link rel="shortcut icon" href="favicon.png?v=2" type="image/png">
+    <link rel="icon" href="favicon.png?v=2">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "1KVR File Upload",
+      "url": "https://1kvr.vercel.app/dot.html",
+      "description": "Upload, store, and manage your files securely in the cloud. Free file hosting service with instant access.",
+      "applicationCategory": "ProductivityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": ["File Upload", "Cloud Storage", "File Management", "Secure Storage", "Download Files", "Preview Files"]
+    }
+    </script>
+
+    <!-- iOS Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="File Storage">
+    <link rel="apple-touch-icon" href="icon-512.png">
+    <style>
+        /* Import Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        /* CSS Variables - Vibrant Modern Colors */
+        :root {
+            --primary-purple: #667eea;
+            --primary-pink: #f093fb;
+            --accent-blue: #4facfe;
+            --accent-cyan: #00f2fe;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --card-bg: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+            --shadow-hover: 0 15px 40px rgba(102, 126, 234, 0.25);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-height: 70px;
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] {
+            --card-bg: #2d3748;
+            --text-primary: #f7fafc;
+            --text-secondary: #cbd5e0;
+            --border-color: #4a5568;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] body {
+            background: linear-gradient(135deg, #1a202c, #2d3748);
+        }
+
+        /* Reset */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: calc(var(--header-height) + 1rem) 1rem 1rem;
+            transition: background var(--transition);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            height: var(--header-height);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--transition);
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: width var(--transition);
+        }
+
+        nav a:hover::after,
+        nav a[aria-current="page"]::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #f093fb;
+        }
+
+        /* Mobile Menu */
+        .menu-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--primary-pink));
+            color: white;
+            font-size: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            z-index: 1001;
+            border: none;
+            transition: all var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.05) rotate(90deg);
+        }
+
+        .menu {
+            position: fixed;
+            top: 5rem;
+            left: 1rem;
+            background: var(--card-bg);
+            width: 220px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-hover);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .menu.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            transition: all var(--transition);
+            font-weight: 500;
+        }
+
+        .menu a:last-child {
+            border-bottom: none;
+        }
+
+        .menu a:hover {
+            background: var(--primary-gradient);
+            color: white;
+            padding-left: 2rem;
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-hover);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 750px;
+            animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+
+        /* File Input Styling with Drag & Drop */
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        #fileInput {
+            width: 100%;
+            padding: 2rem;
+            border: 3px dashed var(--border-color);
+            border-radius: 16px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        #fileInput:hover {
+            border-color: var(--primary-purple);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(240, 147, 251, 0.05));
+            transform: translateY(-2px);
+        }
+
+        #fileInput:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Text Input */
+        #fileNameInput {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        #fileNameInput:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Upload Button with Modern Animation */
+        .upload-btn {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            color: white;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .upload-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .upload-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .upload-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Search Box */
+        #searchBox {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            transition: all var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        #searchBox:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        /* File List */
+        #fileList {
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        #fileList::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        #fileList::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        #fileList::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 10px;
+        }
+
+        #fileList::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple));
+        }
+
+        /* File Box */
+        .file-box {
+            background: var(--card-bg);
+            margin-bottom: 1.2rem;
+            padding: 1.8rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            animation: fadeIn 0.4s ease-out;
+            border: 2px solid transparent;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .file-box:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-purple);
+        }
+
+        .file-box p {
+            margin: 0 0 1.2rem 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .file-box button {
+            flex: 1;
+            min-width: 120px;
+            background: var(--accent-gradient);
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+        }
+
+        .file-box button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .file-box button:last-child {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .file-box button:last-child:hover {
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Dark Mode Toggle */
+        #toggleModeButton {
+            position: fixed;
+            top: 5rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #ffd89b, #19547b);
+            border: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: 30px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            z-index: 999;
+        }
+
+        #toggleModeButton:hover {
+            transform: translateY(-3px) rotate(5deg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state p {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(102, 126, 234, 0.2);
+            border-top-color: var(--primary-purple);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 2rem auto;
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: none;
+            margin: 1rem 0;
+        }
+
+        .progress-container.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-gradient);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            header nav {
+                display: none;
+            }
+
+            .menu-btn {
+                display: flex;
+            }
+
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            #toggleModeButton {
+                padding: 0.7rem 1.3rem;
+                font-size: 13px;
+            }
+
+            .file-actions {
+                flex-direction: column;
+            }
+
+            .file-box button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: calc(var(--header-height) + 0.5rem) 0.5rem 0.5rem;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .menu-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Visually Hidden */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Preview Modal */
+        .preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .preview-modal.active {
+            display: flex;
+        }
+
+        .preview-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: var(--primary-gradient);
+            border-radius: 16px 16px 0 0;
+            color: white;
+        }
+
+        .preview-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .preview-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition);
+        }
+
+        .preview-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .preview-body {
+            padding: 2rem;
+            min-height: 200px;
+        }
+
+        .preview-body iframe,
+        .preview-body img,
+        .preview-body video,
+        .preview-body audio {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 8px;
+        }
+
+        .preview-body pre {
+            background: var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            max-height: 70vh;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .preview-loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .preview-error {
+            text-align: center;
+            padding: 3rem;
+            color: #e74c3c;
+        }
+
+        /* Preview Button - Different color from other buttons */
+        .file-box button[data-action="preview"] {
+            background: linear-gradient(135deg, #ff9a56, #ff6b6b);
+            box-shadow: 0 4px 12px rgba(255, 154, 86, 0.3);
+        }
+
+        .file-box button[data-action="preview"]:hover {
+            box-shadow: 0 8px 20px rgba(255, 154, 86, 0.4);
+        }
+
+        /* PWA Install Prompt */
+        .install-prompt {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            max-width: 500px;
+            width: 90%;
+            animation: slideDownPrompt 0.5s ease-out;
+        }
+
+        @keyframes slideDownPrompt {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .install-prompt-content {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .install-icon {
+            font-size: 2rem;
+        }
+
+        .install-text {
+            flex: 1;
+            font-weight: 600;
+            color: #2d3748;
+            min-width: 150px;
+        }
+
+        .install-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .install-btn-primary,
+        .install-btn-secondary {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .install-btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .install-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .install-btn-secondary {
+            background: rgba(0, 0, 0, 0.05);
+            color: #2d3748;
+        }
+
+        .install-btn-secondary:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* File timestamp styling */
+        .file-timestamp {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .install-prompt {
+                top: 70px;
+            }
+
+            .install-prompt-content {
+                padding: 1rem;
+            }
+
+            .install-buttons {
+                width: 100%;
+            }
+
+            .install-btn-primary,
+            .install-btn-secondary {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- PWA Install Prompt -->
+    <div id="installPrompt" class="install-prompt" style="display: none;">
+        <div class="install-prompt-content">
+            <span class="install-icon">📱</span>
+            <span class="install-text">Install our app for quick access!</span>
+            <div class="install-buttons">
+                <button type="button" id="installBtn" class="install-btn-primary">Install</button>
+                <button type="button" id="laterBtn" class="install-btn-secondary">Later</button>
+            </div>
+        </div>
+    </div>
+
+    <header role="banner">
+        <div class="logo">Text&File Uploads</div>
+        <nav role="navigation">
+            <a href="index.html">Home</a>
+            <a href="text.html">Text Upload</a>
+            <a href="dot.html" aria-current="page">File Upload</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Toggle menu">☰</button>
+    <div class="menu" id="menu" role="navigation">
+        <a href="index.html">Home</a>
+        <a href="text.html">Text Upload</a>
+        <a href="dot.html">File Upload</a>
+        <a href="about.html">About</a>
+    </div>
+
+    <div class="container">
+        <h1>Upload Your Files</h1>
+
+        <button id="toggleModeButton" type="button" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+
+        <form id="uploadForm" aria-label="File upload form">
+            <div class="file-input-wrapper">
+                <label for="fileInput" class="visually-hidden">Select file to upload</label>
+                <input type="file" id="fileInput" accept="*/*" aria-required="true">
+            </div>
+
+            <label for="fileNameInput" class="visually-hidden">Enter file name</label>
+            <input type="text" id="fileNameInput" placeholder="Enter desired file name (without extension)"
+                aria-required="true">
+
+            <button type="submit" class="upload-btn" id="uploadButton">Upload</button>
+        </form>
+
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0%</div>
+        </div>
+
+        <label for="searchBox" class="visually-hidden">Search files</label>
+        <input type="search" id="searchBox" placeholder="🔍 Search files..." aria-label="Search uploaded files">
+
+        <div class="loading-spinner" id="loadingSpinner"></div>
+
+        <div id="fileList" role="region" aria-label="Uploaded files"></div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="preview-modal" id="previewModal">
+        <div class="preview-content">
+            <div class="preview-header">
+                <h3 id="previewFileName">File Preview</h3>
+                <button class="preview-close" id="previewClose" type="button" aria-label="Close preview">✕</button>
+            </div>
+            <div class="preview-body" id="previewBody">
+                <div class="preview-loading">Loading preview...</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase SDK imports - PRESERVED CONFIGURATION
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll, getMetadata } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
+
+        // Firebase config - UNCHANGED
+        const firebaseConfig = {
+            apiKey: "AIzaSyBMS_SwjUwlrNGbbdLNQvxfqJKy1whqH-Y",
+            authDomain: "file-4f9fe.firebaseapp.com",
+            projectId: "file-4f9fe",
+            storageBucket: "file-4f9fe.appspot.com",
+            messagingSenderId: "777922174298",
+            appId: "1:777922174298:web:70b8c6a5006512ef4ce763",
+            measurementId: "G-VE72B5E88S"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+
+        // DOM Elements
+        const elements = {
+            form: document.getElementById('uploadForm'),
+            fileInput: document.getElementById('fileInput'),
+            fileNameInput: document.getElementById('fileNameInput'),
+            uploadButton: document.getElementById('uploadButton'),
+            searchBox: document.getElementById('searchBox'),
+            fileList: document.getElementById('fileList'),
+            toggleMode: document.getElementById('toggleModeButton'),
+            menuBtn: document.getElementById('menuBtn'),
+            menu: document.getElementById('menu'),
+            loadingSpinner: document.getElementById('loadingSpinner'),
+            progressContainer: document.getElementById('progressContainer'),
+            progressFill: document.getElementById('progressFill'),
+            progressText: document.getElementById('progressText')
+        };
+
+        let allFiles = [];
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 6rem;
+                right: 1rem;
+                background: ${type === 'success' ? 'linear-gradient(135deg, #2ecc71, #27ae60)' : 'linear-gradient(135deg, #e74c3c, #c0392b)'};
+                color: white;
+                padding: 1.2rem 2rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+                z-index: 10000;
+                animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                font-weight: 600;
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Upload file with retry logic
+        async function uploadWithRetry(storageRef, file, maxRetries = 3) {
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    await uploadBytes(storageRef, file);
+                    return true;
+                } catch (error) {
+                    if (attempt === maxRetries) {
+                        throw error;
+                    }
+                    // Exponential backoff: 1s, 2s, 4s
+                    const delay = Math.pow(2, attempt - 1) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    showNotification(`Retry attempt ${attempt}/${maxRetries}...`, 'error');
+                }
+            }
+        }
+
+        // Upload file
+        elements.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!elements.fileInput.files.length) {
+                showNotification("Please select a file to upload!", 'error');
+                return;
+            }
+
+            const file = elements.fileInput.files[0];
+            const customFileName = elements.fileNameInput.value.trim();
+
+            if (customFileName === "") {
+                showNotification("File name is required!", 'error');
+                return;
+            }
+
+            const fileExtension = file.name.split('.').pop();
+            const customFilePath = `uploads/${customFileName}.${fileExtension}`;
+            const storageRef = ref(storage, customFilePath);
+
+            try {
+                elements.uploadButton.disabled = true;
+                elements.progressContainer.classList.add('active');
+                elements.progressFill.style.width = '0%';
+                elements.progressText.textContent = '0%';
+
+                // Simulate progress (Firebase doesn't provide upload progress for uploadBytes)
+                const progressInterval = setInterval(() => {
+                    const currentWidth = parseInt(elements.progressFill.style.width) || 0;
+                    if (currentWidth < 90) {
+                        const newWidth = currentWidth + 10;
+                        elements.progressFill.style.width = newWidth + '%';
+                        elements.progressText.textContent = newWidth + '%';
+                    }
+                }, 200);
+
+                await uploadWithRetry(storageRef, file);
+
+                clearInterval(progressInterval);
+                elements.progressFill.style.width = '100%';
+                elements.progressText.textContent = '100%';
+
+                showNotification('✓ File uploaded successfully!', 'success');
+
+                elements.fileInput.value = "";
+                elements.fileNameInput.value = "";
+
+                setTimeout(() => {
+                    elements.progressContainer.classList.remove('active');
+                }, 1000);
+
+                await displayFiles();
+            } catch (error) {
+                console.error('Upload failed:', error);
+                showNotification('✗ Upload failed after retries!', 'error');
+                elements.progressContainer.classList.remove('active');
+            } finally {
+                elements.uploadButton.disabled = false;
+            }
+        });
+
+        // Display files
+        async function displayFiles() {
+            elements.loadingSpinner.classList.add('active');
+            elements.fileList.innerHTML = '';
+
+            const storageRef = ref(storage, 'uploads');
+
+            try {
+                const result = await listAll(storageRef);
+                allFiles = result.items;
+
+                // Sort files by creation time (newest first)
+                const filesWithMetadata = await Promise.all(
+                    allFiles.map(async (fileRef) => {
+                        const metadata = await getMetadata(fileRef);
+                        return { fileRef, timeCreated: metadata.timeCreated };
+                    })
+                );
+
+                // Sort descending (newest first)
+                filesWithMetadata.sort((a, b) => {
+                    return new Date(b.timeCreated).getTime() - new Date(a.timeCreated).getTime();
+                });
+
+                // Extract sorted file references
+                allFiles = filesWithMetadata.map(item => item.fileRef);
+
+                if (allFiles.length === 0) {
+                    elements.fileList.innerHTML = `
+                        <div class="empty-state">
+                            <p>📁 No files uploaded yet</p>
+                            <p style="font-size: 0.95rem;">Start by uploading your first file above</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const fragment = document.createDocumentFragment();
+
+                for (const fileRef of allFiles) {
+                    const url = await getDownloadURL(fileRef);
+                    const metadata = await getMetadata(fileRef);
+                    const fileDiv = document.createElement('div');
+                    fileDiv.className = 'file-box';
+
+                    // Format timestamp
+                    let timestampHTML = '';
+                    if (metadata.timeCreated) {
+                        const date = new Date(metadata.timeCreated);
+                        const formatted = date.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        }) + ' at ' + date.toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            hour12: true
+                        });
+                        timestampHTML = `<div class="file-timestamp">📅 Uploaded on ${formatted}</div>`;
+                    }
+
+                    fileDiv.innerHTML = `
+                        ${timestampHTML}
+                        <p>📄 ${escapeHtml(fileRef.name)}</p>
+                        <div class="file-actions">
+                            <button data-action="preview" data-url="${url}" data-filename="${escapeHtml(fileRef.name)}" type="button">👁️ Preview</button>
+                            <button data-action="download" data-url="${url}" data-filename="${escapeHtml(fileRef.name)}" type="button">⬇️ Download</button>
+                            <button data-action="delete" data-path="${fileRef.fullPath}" type="button">🗑️ Delete</button>
+                        </div>
+                    `;
+                    fragment.appendChild(fileDiv);
+                }
+
+                elements.fileList.appendChild(fragment);
+            } catch (error) {
+                console.error('Error fetching file list:', error);
+                showNotification('✗ Error loading files!', 'error');
+            } finally {
+                elements.loadingSpinner.classList.remove('active');
+            }
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // FIXED: Filter files by actual filename (without emoji)
+        elements.searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            const fileBoxes = elements.fileList.querySelectorAll('.file-box');
+
+            fileBoxes.forEach((box) => {
+                // Extract actual filename from the paragraph (remove emoji)
+                const fileNameElement = box.querySelector('p');
+                const fullText = fileNameElement.textContent;
+                // Remove the emoji (📄) and any leading/trailing whitespace
+                const actualFileName = fullText.replace(/📄\s*/, '').trim().toLowerCase();
+                box.style.display = actualFileName.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+
+        // Event delegation for file actions - Preview, Download, Delete
+        elements.fileList.addEventListener('click', async (e) => {
+            const button = e.target.closest('button[data-action]');
+            if (!button) return;
+
+            const action = button.dataset.action;
+
+            if (action === 'preview') {
+                const url = button.dataset.url;
+                const fileName = button.dataset.filename;
+                await previewFile(url, fileName);
+            } else if (action === 'download') {
+                const url = button.dataset.url;
+                const fileName = button.dataset.filename;
+
+                // Simple download approach - works best in Chrome
+                try {
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName || 'download';
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+
+                    // Cleanup
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                    }, 100);
+
+                    showNotification('✓ Download started!', 'success');
+                } catch (error) {
+                    console.error('Download failed:', error);
+                    showNotification('✗ Download failed!', 'error');
+                }
+            } else if (action === 'delete') {
+                const path = button.dataset.path;
+                await deleteFile(path);
+            }
+        });
+
+        // Preview file
+        async function previewFile(url, fileName) {
+            const modal = document.getElementById('previewModal');
+            const previewBody = document.getElementById('previewBody');
+            const previewFileName = document.getElementById('previewFileName');
+
+            // Show modal
+            modal.classList.add('active');
+            previewFileName.textContent = fileName;
+            previewBody.innerHTML = '<div class="preview-loading">Loading preview...</div>';
+
+            try {
+                // Get file extension
+                const extension = fileName.split('.').pop().toLowerCase();
+
+                // Image files
+                if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(extension)) {
+                    previewBody.innerHTML = `<img src="${url}" alt="${escapeHtml(fileName)}" style="max-width: 100%; height: auto;">`;
+                }
+                // PDF files
+                else if (extension === 'pdf') {
+                    previewBody.innerHTML = `<iframe src="${url}" style="width: 100%; height: 70vh; border: none;"></iframe>`;
+                }
+                // Video files
+                else if (['mp4', 'webm', 'ogg', 'mov'].includes(extension)) {
+                    previewBody.innerHTML = `<video controls style="max-width: 100%; height: auto;"><source src="${url}" type="video/${extension}">Your browser does not support the video tag.</video>`;
+                }
+                // Audio files
+                else if (['mp3', 'wav', 'ogg', 'm4a'].includes(extension)) {
+                    previewBody.innerHTML = `<audio controls style="width: 100%;"><source src="${url}" type="audio/${extension}">Your browser does not support the audio tag.</audio>`;
+                }
+                // Text files
+                else if (['txt', 'md', 'json', 'xml', 'csv', 'html', 'css', 'js', 'py', 'java', 'cpp', 'c', 'h'].includes(extension)) {
+                    const response = await fetch(url);
+                    const text = await response.text();
+                    previewBody.innerHTML = `<pre>${escapeHtml(text)}</pre>`;
+                }
+                // Office documents - use Google Docs Viewer
+                else if (['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(extension)) {
+                    previewBody.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" style="width: 100%; height: 70vh; border: none;"></iframe>`;
+                }
+                // Default - show link to open in new tab
+                else {
+                    previewBody.innerHTML = `
+                        <div class="preview-error">
+                            <p>⚠️ Preview not available for this file type</p>
+                            <p style="font-size: 0.9rem; margin-top: 1rem;"><a href="${url}" target="_blank" style="color: var(--primary-purple); text-decoration: underline;">Open in new tab</a></p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Preview failed:', error);
+                previewBody.innerHTML = `
+                    <div class="preview-error">
+                        <p>✗ Failed to load preview</p>
+                        <p style="font-size: 0.9rem; margin-top: 1rem;"><a href="${url}" target="_blank" style="color: var(--primary-purple); text-decoration: underline;">Open in new tab</a></p>
+                    </div>
+                `;
+            }
+        }
+
+        // Close preview modal
+        function closePreview() {
+            const modal = document.getElementById('previewModal');
+            modal.classList.remove('active');
+        }
+
+        // Event listeners for preview modal
+        document.getElementById('previewClose').addEventListener('click', closePreview);
+        document.getElementById('previewModal').addEventListener('click', (e) => {
+            if (e.target.id === 'previewModal') {
+                closePreview();
+            }
+        });
+
+        // Keyboard support - ESC to close preview
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePreview();
+            }
+        });
+
+        // Delete file
+        async function deleteFile(filePath) {
+            if (!confirm('Are you sure you want to delete this file?')) return;
+
+            const fileRef = ref(storage, filePath);
+
+            try {
+                elements.loadingSpinner.classList.add('active');
+                await deleteObject(fileRef);
+                showNotification('✓ File deleted successfully!', 'success');
+                await displayFiles();
+            } catch (error) {
+                console.error('Error deleting file:', error);
+                showNotification('✗ Error deleting file!', 'error');
+                elements.loadingSpinner.classList.remove('active');
+            }
+        }
+
+        // Theme toggle
+        elements.toggleMode.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            elements.toggleMode.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            elements.toggleMode.textContent = '☀️ Light Mode';
+        }
+
+        // Mobile menu toggle
+        elements.menuBtn.addEventListener('click', () => {
+            elements.menu.classList.toggle('visible');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!elements.menuBtn.contains(e.target) && !elements.menu.contains(e.target)) {
+                elements.menu.classList.remove('visible');
+            }
+        });
+
+        // Initialize - Load files on page load
+        window.addEventListener('load', displayFiles);
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        const installPromptEl = document.getElementById('installPrompt');
+        const installBtn = document.getElementById('installBtn');
+        const laterBtn = document.getElementById('laterBtn');
+
+        // Check if app is already installed
+        function isAppInstalled() {
+            return window.matchMedia('(display-mode: standalone)').matches ||
+                window.navigator.standalone === true;
+        }
+
+        // Show install prompt if not installed
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+
+            if (!isAppInstalled()) {
+                installPromptEl.style.display = 'block';
+            }
+        });
+
+        // Handle install button click
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                if (!deferredPrompt) {
+                    return;
+                }
+
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                }
+
+                deferredPrompt = null;
+                installPromptEl.style.display = 'none';
+            });
+        }
+
+        // Handle later button click
+        if (laterBtn) {
+            laterBtn.addEventListener('click', () => {
+                installPromptEl.style.display = 'none';
+            });
+        }
+
+        // Check if installed and hide prompt
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            installPromptEl.style.display = 'none';
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>
